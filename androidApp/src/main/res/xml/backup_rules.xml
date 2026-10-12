@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 11 and older: the encrypted app password is bound to this device's Keystore, so don't back it up. -->
+<full-backup-content>
+    <exclude domain="sharedpref" path="deckboard_secrets.xml" />
+</full-backup-content>
