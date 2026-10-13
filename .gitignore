@@ -21,3 +21,4 @@ node_modules/
 # local helper scripts
 run-ipad.sh
 run-android.sh
+TODO.md

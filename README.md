@@ -58,10 +58,6 @@ Package / bundle ID: `de.kloostech.deckboard`.
 - Android host: `./gradlew :shared:testAndroidHostTest`
 - iOS: `./gradlew :shared:iosSimulatorArm64Test`
 
-## Releasing
-
-See [TODO.md](./TODO.md) for the store release checklist.
-
 ## License
 
 Apache License 2.0, Copyright 2026 KloosTech. See [LICENSE](./LICENSE), [NOTICE](./NOTICE) and [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
