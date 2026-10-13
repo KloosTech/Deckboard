@@ -20,12 +20,24 @@ dependencies {
     debugImplementation(libs.compose.uiTooling)
 }
 
-// Release signing comes from local.properties or environment variables, never from the repository:
-// DECKBOARD_KEYSTORE, DECKBOARD_KEYSTORE_PASSWORD, DECKBOARD_KEY_ALIAS, DECKBOARD_KEY_PASSWORD
+// Release signing never lives in the repository. Non-secret values (DECKBOARD_KEYSTORE, DECKBOARD_KEY_ALIAS) come from
+// local.properties or the environment. Passwords come from the environment (CI) or the macOS Keychain:
+//   security add-generic-password -a "$USER" -s deckboard-upload-keystore -w
+// DECKBOARD_KEY_PASSWORD falls back to the keystore password (PKCS12 keystores use one password).
 val localProps = Properties().apply {
     rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
 }
+
+fun keychainPassword(service: String): String? = runCatching {
+    providers.exec {
+        commandLine("security", "find-generic-password", "-s", service, "-w")
+        isIgnoreExitValue = true
+    }.standardOutput.asText.get().trim().ifEmpty { null }
+}.getOrNull()
+
 fun signingValue(name: String): String? = System.getenv(name) ?: localProps.getProperty(name)
+val releaseStorePassword: String? by lazy { signingValue("DECKBOARD_KEYSTORE_PASSWORD") ?: keychainPassword("deckboard-upload-keystore") }
+val releaseKeyPassword: String? by lazy { signingValue("DECKBOARD_KEY_PASSWORD") ?: releaseStorePassword }
 
 android {
     namespace = "de.kloostech.deckboard"
@@ -45,12 +57,12 @@ android {
     }
     signingConfigs {
         val keystore = signingValue("DECKBOARD_KEYSTORE")
-        if (keystore != null) {
+        if (keystore != null && releaseStorePassword != null) {
             create("release") {
                 storeFile = file(keystore)
-                storePassword = signingValue("DECKBOARD_KEYSTORE_PASSWORD")
+                storePassword = releaseStorePassword
                 keyAlias = signingValue("DECKBOARD_KEY_ALIAS")
-                keyPassword = signingValue("DECKBOARD_KEY_PASSWORD")
+                keyPassword = releaseKeyPassword
             }
         }
     }

@@ -48,7 +48,7 @@ Package / bundle ID: `de.kloostech.deckboard`.
 
 - Android: `./gradlew :androidApp:assembleDebug`
 - Desktop: `./gradlew :desktopApp:run` (hot reload: `./gradlew :desktopApp:hotRun --auto`)
-- Android release bundle: `./gradlew :androidApp:bundleRelease` (signing keys from `local.properties` or env: `DECKBOARD_KEYSTORE`, `DECKBOARD_KEYSTORE_PASSWORD`, `DECKBOARD_KEY_ALIAS`, `DECKBOARD_KEY_PASSWORD`)
+- Android release bundle: `./gradlew :androidApp:bundleRelease` (keystore path and alias from `local.properties`, password from the macOS Keychain or env; see the comment in `androidApp/build.gradle.kts`)
 - Desktop installers: `./gradlew :desktopApp:packageDmg` (or `packageMsi` / `packageDeb`)
 - iOS: open [`iosApp`](./iosApp) in Xcode, pick your development team under Signing & Capabilities, run
 
