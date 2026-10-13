@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -28,9 +32,12 @@ fun trademarkDisclaimer(): String =
 /** Shared About dialog: name, version, tagline and the third-party/trademark disclaimer. */
 @Composable
 fun AboutDialog(onDismiss: () -> Unit) {
+    var showLicenses by remember { mutableStateOf(false) }
+    if (showLicenses) OpenSourceLicensesDialog(onDismiss = { showLicenses = false })
     KDialog(
         onDismissRequest = onDismiss,
         actions = {
+            KButton(onClick = { showLicenses = true }, variant = KButtonVariant.Text) { KText(tr("Open-source licenses")) }
             KButton(onClick = onDismiss, variant = KButtonVariant.Text) { KText(KompoundTheme.strings.close) }
         },
     ) {

@@ -63,4 +63,6 @@ See [TODO.md](./TODO.md) for the store release checklist.
 
 ## License
 
-TBD (see TODO.md, Phase 0).
+Apache License 2.0, Copyright 2026 KloosTech. See [LICENSE](./LICENSE), [NOTICE](./NOTICE) and [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
+
+The name "Deckboard" and the app icon are not covered by the license grant (Apache-2.0, section 6): forks must use a different name and icon.

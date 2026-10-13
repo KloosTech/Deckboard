@@ -430,6 +430,10 @@ internal val GermanTranslations: Map<String, String> = mapOf(
         "Benutzername",
     "Username or app password was rejected" to
         "Benutzername oder App-Passwort wurde abgelehnt",
+    "Open-source licenses" to
+        "Open-Source-Lizenzen",
+    "Deckboard is free software under the Apache License 2.0. Copyright {year} KloosTech." to
+        "Deckboard ist freie Software unter der Apache License 2.0. Copyright {year} KloosTech.",
     "Version {version}" to
         "Version {version}",
     "View" to
