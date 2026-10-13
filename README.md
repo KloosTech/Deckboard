@@ -48,8 +48,9 @@ Package / bundle ID: `de.kloostech.deckboard`.
 
 - Android: `./gradlew :androidApp:assembleDebug`
 - Desktop: `./gradlew :desktopApp:run` (hot reload: `./gradlew :desktopApp:hotRun --auto`)
+- Android release bundle: `./gradlew :androidApp:bundleRelease` (signing keys from `local.properties` or env: `DECKBOARD_KEYSTORE`, `DECKBOARD_KEYSTORE_PASSWORD`, `DECKBOARD_KEY_ALIAS`, `DECKBOARD_KEY_PASSWORD`)
 - Desktop installers: `./gradlew :desktopApp:packageDmg` (or `packageMsi` / `packageDeb`)
-- iOS: open [`iosApp`](./iosApp) in Xcode, set `TEAM_ID` in `iosApp/Configuration/Config.xcconfig`, run
+- iOS: open [`iosApp`](./iosApp) in Xcode, pick your development team under Signing & Capabilities, run
 
 ## Tests
 
