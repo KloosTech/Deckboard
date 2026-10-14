@@ -44,6 +44,7 @@ data class AppUiState(
     /** Drives the "New Card" dialog. Lives here (not local Compose state) so the desktop menu
      * bar / keyboard shortcut — outside the board's composable subtree — can open it too. */
     val showAddCardDialog: Boolean = false,
+    val showAddColumnDialog: Boolean = false,
     val stacks: List<Stack> = emptyList(),
     val stacksLoading: Boolean = false,
     val stacksError: String? = null,
@@ -152,6 +153,32 @@ class AppViewModel(
 
     fun dismissAddCardDialog() {
         _state.update { it.copy(showAddCardDialog = false) }
+    }
+
+    fun openAddColumnDialog() {
+        if (_state.value.selectedBoardId == null) return
+        _state.update { it.copy(showAddColumnDialog = true) }
+    }
+
+    fun dismissAddColumnDialog() {
+        _state.update { it.copy(showAddColumnDialog = false) }
+    }
+
+    /** Appends a column (stack) with [title] to the right of the current board's columns. */
+    fun createColumn(title: String) {
+        val trimmed = title.trim()
+        if (trimmed.isEmpty()) return
+        val boardId = _state.value.selectedBoardId ?: return
+        val client = apiClient ?: return
+        val order = _state.value.stacks.size
+
+        scope.launch {
+            runCatching { client.createStack(boardId, trimmed, order) }
+                .onSuccess { loadStacks(boardId) }
+                .onFailure { error ->
+                    _state.update { it.copy(actionError = tr("Failed to add column: {error}", "error" to error.message)) }
+                }
+        }
     }
 
     fun dismissActionError() {

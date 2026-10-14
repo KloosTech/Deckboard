@@ -83,6 +83,7 @@ fun App(viewModel: AppViewModel, modifier: Modifier = Modifier) {
                         onMoveCardLocally = viewModel::moveCardLocally,
                         onCommitCardMove = viewModel::commitCardMove,
                         onAddCard = viewModel::openAddCardDialog,
+                        onAddColumn = viewModel::openAddColumnDialog,
                         onDeleteBoard = { boardId ->
                             viewModel.deleteBoard(boardId)
                             showingBoardOnCompact = false
@@ -143,6 +144,7 @@ fun App(viewModel: AppViewModel, modifier: Modifier = Modifier) {
                         onMoveCardLocally = viewModel::moveCardLocally,
                         onCommitCardMove = viewModel::commitCardMove,
                         onAddCard = viewModel::openAddCardDialog,
+                        onAddColumn = viewModel::openAddColumnDialog,
                         onDeleteBoard = viewModel::deleteBoard,
                         onChangeBoardColor = viewModel::updateBoardColor,
                         onSetDoneColumn = viewModel::setDoneColumn,
@@ -180,6 +182,18 @@ fun App(viewModel: AppViewModel, modifier: Modifier = Modifier) {
                 onConfirm = { title ->
                     viewModel.createCard(title)
                     viewModel.dismissAddCardDialog()
+                },
+            )
+        }
+
+        if (state.showAddColumnDialog) {
+            TextInputDialog(
+                title = tr("New Column"),
+                label = tr("Column title"),
+                onDismiss = viewModel::dismissAddColumnDialog,
+                onConfirm = { title ->
+                    viewModel.createColumn(title)
+                    viewModel.dismissAddColumnDialog()
                 },
             )
         }

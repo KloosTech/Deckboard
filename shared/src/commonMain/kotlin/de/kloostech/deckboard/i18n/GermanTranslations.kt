@@ -38,12 +38,16 @@ internal val GermanTranslations: Map<String, String> = mapOf(
         "Benutzer oder Gruppe hinzufügen",
     "Add card" to
         "Karte hinzufügen",
+    "Add column" to
+        "Spalte hinzufügen",
     "Add label" to
         "Label hinzufügen",
     "Add missing column: {list}" to
         "Fehlende Spalte hinzufügen: {list}",
     "Add missing columns: {list}" to
         "Fehlende Spalten hinzufügen: {list}",
+    "Add your first column" to
+        "Erste Spalte hinzufügen",
     "Add {name}" to
         "{name} hinzufügen",
     "App password" to
@@ -72,6 +76,8 @@ internal val GermanTranslations: Map<String, String> = mapOf(
         "Server nicht gefunden",
     "Cancel new label" to
         "Neues Label abbrechen",
+    "Column title" to
+        "Spaltentitel",
     "Card title" to
         "Kartentitel",
     "Check the address and your connection. ({detail})" to
@@ -160,6 +166,8 @@ internal val GermanTranslations: Map<String, String> = mapOf(
         "Gib deine Nextcloud-Adresse ein.",
     "Enter your Nextcloud username." to
         "Gib deinen Nextcloud-Benutzernamen ein.",
+    "Failed to add column: {error}" to
+        "Spalte konnte nicht hinzugefügt werden: {error}",
     "Failed to add columns: {error}" to
         "Spalten konnten nicht hinzugefügt werden: {error}",
     "Failed to assign label ({code})" to
@@ -274,6 +282,8 @@ internal val GermanTranslations: Map<String, String> = mapOf(
         "Mai",
     "New Board" to
         "Neues Board",
+    "New Column" to
+        "Neue Spalte",
     "New Card" to
         "Neue Karte",
     "New board" to

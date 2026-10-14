@@ -65,7 +65,9 @@ import de.kloostech.deckboard.data.Board
 import de.kloostech.deckboard.data.DeckCard
 import de.kloostech.deckboard.data.Stack
 import androidx.compose.foundation.style.Style
+import tech.kloos.kompound.buttons.KButton
 import tech.kloos.kompound.icon.KIcon
+import tech.kloos.kompound.text.KText
 import tech.kloos.kompound.menu.KMenu
 import tech.kloos.kompound.menu.KMenuItem
 import tech.kloos.kompound.dnd.KDragAndDropContainer
@@ -95,6 +97,8 @@ fun BoardScreen(
      * lives above this composable so it can also be opened from outside the board (desktop
      * menu bar / keyboard shortcut). */
     onAddCard: () -> Unit,
+    /** Requests the "New Column" dialog (board menu → Add column, or the empty-board button). */
+    onAddColumn: () -> Unit = {},
     onDeleteBoard: (boardId: Int) -> Unit = {},
     onChangeBoardColor: (boardId: Int, color: String) -> Unit = { _, _ -> },
     /** Sets (or unsets) [Stack.isDoneColumn]. Cards dropped into the done column get marked
@@ -130,7 +134,7 @@ fun BoardScreen(
     val pageState = rememberLazyListState()
 
     Column(modifier = modifier.fillMaxSize().background(DeckBackground)) {
-        BoardHeader(board, stacks, onBack, onDeleteBoard, onChangeBoardColor, onRefresh, onShareBoard, onShowActivity)
+        BoardHeader(board, stacks, onBack, onDeleteBoard, onChangeBoardColor, onRefresh, onAddColumn, onShareBoard, onShowActivity)
 
         if (actionError != null) {
             ActionErrorBanner(actionError, onDismissActionError)
@@ -160,7 +164,12 @@ fun BoardScreen(
                     Text(error, color = DeckError)
                 }
                 stacks.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(tr("No columns on this board"), color = DeckTextTertiary)
+                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                        Text(tr("No columns on this board"), color = DeckTextTertiary)
+                        KButton(onClick = onAddColumn, modifier = Modifier.height(56.dp)) {
+                            KText(tr("Add your first column"), textStyle = MaterialTheme.typography.titleMedium)
+                        }
+                    }
                 }
                 else -> KDragAndDropContainer(state = dndState, modifier = Modifier.fillMaxSize()) {
                     if (stackVertically) {
@@ -284,6 +293,7 @@ private fun BoardHeader(
     onDeleteBoard: (Int) -> Unit,
     onChangeBoardColor: (Int, String) -> Unit,
     onRefresh: () -> Unit,
+    onAddColumn: () -> Unit,
     onShareBoard: () -> Unit,
     onShowActivity: () -> Unit,
 ) {
@@ -360,6 +370,11 @@ private fun BoardHeader(
                         text = tr("Refresh"),
                         leading = { KIcon(Icons.Filled.Refresh, contentDescription = null) },
                         onClick = { menuExpanded = false; onRefresh() },
+                    )
+                    KMenuItem(
+                        text = tr("Add column"),
+                        leading = { KIcon(Icons.Filled.Add, contentDescription = null) },
+                        onClick = { menuExpanded = false; onAddColumn() },
                     )
                     KMenuItem(
                         text = tr("Share"),
