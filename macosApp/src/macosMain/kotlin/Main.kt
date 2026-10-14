@@ -10,7 +10,7 @@ fun main() {
     NSApplication.sharedApplication()
     // A bare executable is not a regular app by default: without this its window never becomes key and gets no keyboard input.
     NSApp?.setActivationPolicy(NSApplicationActivationPolicy.NSApplicationActivationPolicyRegular)
-    Window("Deckboard (macOS native)") {
+    Window("Deckboard") {
         App()
     }
     NSApp?.activateIgnoringOtherApps(true)
